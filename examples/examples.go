@@ -71,4 +71,34 @@ func main() {
 		fmt.Printf("The key is: %v\n", key)
 		fmt.Printf("The Data is: %v\n", getZnode(c, chldPath))
 	}
+
+	// Example #3
+	// Set watch on znode, and wait for event.
+	// Catch the event and use switch - case to do something, or just print the event name.
+	data, _, ch, err := c.GetW(zkPath)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("The current data is: %v.\nI'm watching.\n", string(data[:]))
+	for event := range ch {
+		switch event.Type {
+		case 1:
+			fmt.Printf("Node created.")
+			// Do somthing
+		case 2:
+			fmt.Printf("Node deleted!")
+			// Do somthing
+		case 3:
+			fmt.Printf("Node changed.")
+			// Do somthing
+		case 4:
+			fmt.Printf("Node children changed.")
+			// Do somthing
+		default:
+			fmt.Printf("Something happen.")
+		}
+		// Or just ...
+		fmt.Println(event.Type)
+
+	}
 }

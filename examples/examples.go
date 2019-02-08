@@ -61,13 +61,14 @@ func main() {
 	// Get zNode Children and for each one of them,
 	// check if the znode exist and then print the key and the data.
 	myChld := getChildren(c, zkPath)
+	fmt.Printf("The key are: %v\n", myChld)
 	for _, key := range myChld {
 		chldPath := zkPath + "/" + key
 		err := checkZnode(c, chldPath)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("The keys are: %v\n", key)
+		fmt.Printf("The key is: %v\n", key)
 		fmt.Printf("The Data is: %v\n", getZnode(c, chldPath))
 	}
 }
